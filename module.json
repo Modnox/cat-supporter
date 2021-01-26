@@ -1,0 +1,7 @@
+{
+	"disableAutoUpdate": false,
+	"name": "cat-supporter",
+	"author": "Modnox",
+	"description": "Guide for cat dungeon",
+	"servers": ["https://raw.githubusercontent.com/Modnox/cat-supporter/master/"]
+}
