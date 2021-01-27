@@ -1,6 +1,6 @@
 module.exports = function catsupporter(dispatch) {
     const mapIds = [3104, 3204]
-    let enabled = false;
+    let enabled = true;
     let activePlayers = new Set();
 
     dispatch.command.add('cat', () => {
