@@ -5,12 +5,12 @@ module.exports = function catsupporter(dispatch) {
 
     dispatch.command.add('cat', () => {
         enabled = !enabled
-        command.message('catsupporter ' + (enabled ? 'enabled' : 'disabled'))
+        dispatch.command.message('catsupporter ' + (enabled ? 'enabled' : 'disabled'))
     })
 
     dispatch.hook('S_LOAD_TOPO', 3, (event) => {
         if (mapIds.includes(event.zone)) {
-            command.message('<br> Welcome to the Catalepticon<br>');
+            dispatch.command.message('<br> Welcome to the Catalepticon<br>');
         }
     });
 
