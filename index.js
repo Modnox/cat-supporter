@@ -54,10 +54,10 @@ module.exports = function catsupporter(dispatch) {
         let players = Array.from(activePlayers)
         dispatch.toClient('S_PARTY_MARKER', 1, {
             markers: [{
-                color: 0,
+                color: 2,
                 target: players[0]
             }, {
-                color: 1,
+                color: 2,
                 target: players[1]
             }
             ]
