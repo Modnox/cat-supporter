@@ -4,10 +4,10 @@ module.exports = function catsupporter(dispatch) {
     let enabled = true
     let activePlayers = new Set()
     let partyMembers = new Map()
-    let myGameId
     let default_fm_mode = config.default_fm_mode
     let mechanic_fm_mode = config.mechanic_fm_mode
     let enable_fm_trigger = config.enable_fm_trigger
+    let changed = false;
 
     dispatch.command.add('cat', (cmd) => {
         switch (cmd) {
@@ -22,11 +22,6 @@ module.exports = function catsupporter(dispatch) {
                 dispatch.command.message('catsupporter ' + (enabled ? 'enabled' : 'disabled'))
         }
     })
-
-    dispatch.hook('S_LOGIN', 14, e => {
-            myGameId = e.gameId;
-        }
-    )
 
     dispatch.hook('S_PARTY_MEMBER_LIST', 8, (event) => {
         if (enabled) {
@@ -50,8 +45,9 @@ module.exports = function catsupporter(dispatch) {
                 if (activePlayers.size === 2) {
                     activateMarker()
                 }
-                if (enable_fm_trigger && (event.target === myGameId)) {
+                if (enable_fm_trigger && !changed) {
                     changeFMMode(mechanic_fm_mode)
+                    changed = true;
                 }
             }
             if (event.id === 32040007) {
@@ -67,8 +63,9 @@ module.exports = function catsupporter(dispatch) {
             if ([31040001, 32040001].includes(event.id)) {
                 dispatch.toClient('S_PARTY_MARKER', 1, {marker: [{}]})
                 activePlayers.clear()
-                if (enable_fm_trigger && (event.target === myGameId)) {
+                if (enable_fm_trigger && changed) {
                     changeFMMode(default_fm_mode)
+                    changed = false
                 }
             }
         }
